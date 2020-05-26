@@ -1,0 +1,26 @@
+#ConfigContent{
+   width: 180%;
+   left: -35%;
+}
+.myProgress{
+   width: 62%;
+   float: right;
+   margin-top: 1%;
+}
+.sidebar::-webkit-scrollbar {
+       width: 0 !important;
+   }
+.main-header{
+   z-index: 1000!important;
+}.danger {
+background-color: #ffdddd;
+border-left: 6px solid #f44336;
+}
+.info {
+ background-color: #000000ad;
+ color: #ff7504;
+ font-size: 0.9rem;
+}
+.form-check{
+	    padding-left: 0px!important;
+}

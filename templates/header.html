@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html style="background-color: #1e2a31;">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HOST IPS | BKCS</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/dist/css/font-awesome.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/dist/css/ionicons.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/plugins/datatables/dataTables.bootstrap4.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/dist/css/adminlte1.css') }}"
+    <!-- iCheck -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/plugins/iCheck/flat/blue.css') }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/dist/css/google_font.css') }}">
+    <!-- passtrength -->
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/dist/css/passtrength.css') }}">
+    <!-- anomay css -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/dist/css/anomaly.css') }}">
+    <script type="text/javascript">
+        function check() {
+            if ('1' == '<?=$apache_flag?>') {
+                $("#LogModel").modal()
+            }
+            if ('1' == '<?=$waf_flag?>') {
+                $("#LogModel").modal()
+            }
+            if (window.location.href.includes("log.php") == true) {
+                document.getElementById("loglink").href = "#";
+                document.getElementById("loglink").setAttribute("data-dismiss", "modal");
+            }
+        }
+        window.onload = function () {
+            //time is set in milliseconds
+            setTimeout(check, 1000)
+        };
+    </script>
+</head>
+
+<body class="hold-transition sidebar-mini" id="main-body">
+    <div class="wrapper" id="main">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand bg-white navbar-light header-custom page-topbar">
+            <!-- Left navbar links -->
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar elevation-4">
+                <!-- Brand Logo -->
+                <a class="brand-link">
+                    <img src="/static/bkcs-logo.png" alt="BKCS"
+                        class="brand-image img-circle elevation-3" style="opacity: .8; margin-left: 6px;">
+                    <span class="brand-text font-weight-light"><strong class="css-color-blue"><b>IPS
+                                DASHBOARD</b></strong></span>
+                </a>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+
+                            <li class="menusection">Main</li>
+                            <li class="nav-item has-treeview">
+                                <a href="/" class="nav-link">
+                                    <p><i class="fa fa-home" aria-hidden="true"></i> &nbsp;Trang chủ</p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="firewall.php" class="nav-link">
+                                    <p><i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Cấu hình tường lửa</p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="rule.php" class="nav-link">
+                                    <p><i class="fa fa-list" aria-hidden="true"></i> &nbsp;Quản lý luật tường lửa</p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="wafrule.php" class="nav-link">
+                                    <p><i class="fa fa-list" aria-hidden="true"></i> &nbsp;Quản lý luật tự do</p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="app.php" class="nav-link">
+                                    <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Quản lý ứng dụng</i></p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="log.php" class="nav-link">
+                                    <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Quản lý lưu nhật ký</i>
+                                    </p>
+                                </a>
+                            </li>
+                            <!--  <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="fa fa-archive"></i><p> &nbsp;Quản lý dịch vụ<i class="fa fa-angle-left right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="group_website.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Cấu hình dịch vụ</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="service_testing_and_evaluation.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Kiểm thử và đánh giá dịch vụ</p>
+                  </a>
+                </li>
+              </ul>
+      </li> -->
+                            <li class="nav-item has-treeview">
+                                <a href="service_testing_and_evaluation.php" class="nav-link">
+                                    <p><i class="fa fa-archive" aria-hidden="true"></i> &nbsp;Kiểm thử và đánh giá dịch
+                                        vụ</i></p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="clamav.php" class="nav-link">
+                                    <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Rà soát mã độc hệ
+                                        thống</i></p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="file_secure.php" class="nav-link">
+                                    <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Rà soát tập tin mã
+                                        độc</i></p>
+                                </a>
+                            </li>
+                            <!--  <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="fa fa-archive"></i><p> &nbsp;Phân hệ mã độc DGA<i class="fa fa-angle-left right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="dga_index.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Thông tin máy trạm</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="dga_list.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Danh sách tên miền DGA</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="dga_custom.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Tên miền tự định nghĩa</p>
+                  </a>
+                </li> <li class="nav-item">
+                  <a href="dga_malware.php" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i><p>Thông tin mã độc</p>
+                  </a>
+                </li>
+              </ul>
+      </li> -->
+
+                            <li class="nav-item has-treeview">
+                                <a href="firewall_module.php" class="nav-link">
+                                    <p><i class="fa fa-sitemap" aria-hidden="true"></i> &nbsp;Phân hệ tường lửa </i>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="changepassword.php" class="nav-link">
+                                    <p><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;Thay đổi mật khẩu </i>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="php/logout.php" class="nav-link">
+                                    <p><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Đăng xuất </i>
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- /.sidebar-menu -->
+                </div>
+                <!-- /.sidebar -->
+            </aside>
+
+        </nav>
+        <!-- /.navbar -->
+        <!-- jQuery -->
+        <script src="styles/plugins/jquery/jquery.min.js"></script>
+
+
+        <div class="modal" tabindex="-1" role="dialog" id="LogModel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 style="color: black" class="modal-title">Cảnh báo tấn công</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: black">đã phát hiện tấn công đến máy chủ dịch vụ công trực tuyến!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <a id="loglink" href="/log.php" class="btn btn-primary">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
