@@ -82,7 +82,6 @@ def log():
 @app.route("/chart", methods=['GET'])
 def network():
   data = [line.strip() for line in open("E:/audit.log", 'r')]
-
   dic = {'method':{},'port':{},'status':{}}
   dateDic = {}
   hourDic = {}
