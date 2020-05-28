@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="includeHeader"></div>
+  {% include 'header.html' %}
+  </div>
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div>
+            <!-- /.card-header -->
+            <div>
+              <div class="session">
+
+              </div>
+              <div class="row">
+
+                <div class="col-md-5">
+
+                  <div class="card card-custom" style="height: 717px;">
+
+                    <div class="card-header card-header-cus">
+                      <h3 class="card-title">Thông tin thiết bị</h3>
+
+                    </div>
+                    <div class="card-body">
+                     
+                      <ul id="server-list" class="list-group">
+
+                        <li class="list-group-item">
+                          <a>
+                            <b class="color-b">Time:</b>
+                          </a> <i id="timeInfo"></i>
+                          </a>
+
+                          <b class="color-b" style="margin-left: 20px">Uptime:</b><i id="uptimeInfo"></i>
+                        </li>
+                        <li class="list-group-item">
+                          <a>
+                            <b class="color-b">SWAP:</b>
+                          </a> <i id="swapInfo"> </i>
+                          </a>
+                        </li>
+                        <li class="list-group-item">
+                          <a>
+                            <b class="color-b">Processes:</b>
+                          </a> <i id="processInfo"></i>
+                          </a>
+                        </li>
+                      </ul>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card card-custom">
+                    <div class="card-header">
+                      <h3 class="card-title">Biểu đồ thống kê</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="chart col-md-6 circle-chart">
+                          <div id="RAM" style="height: 250px; width: 100%;"></div>
+                          <div
+                            style="position: absolute;background-color: #2b3c46;height: 10px;width: 100%;bottom: 2px;">
+                          </div>
+                        </div>
+                        <div class="chart col-md-6 circle-chart">
+                          <div id="CPU" style="height: 250px; width: 100%;"></div>
+                          <div style="position: absolute;background-color: #2b3c46;height: 10px;width: 100%;bottom: 2px;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card card-custom">
+
+                    <div class="card-header">
+                      <form action="php/hardware.php" method="post" style="float: right;">
+                        <input value="1" type="hidden" name="tab" id="tabSelect">
+                        <button type="submit" class="btn btn-add Disable"><i class="fa fa-refresh"
+                            aria-hidden="true"></i> Làm mới</button>
+                      </form>
+                      <h3 class="card-title"> Cấu hình phần cứng </h3>
+
+
+                    </div>
+                     <div class="card-body">
+                      {% for i in range(hard | length )%}
+                      {%if hard[i][0] == 'newtable' %}
+                                                </tbody>
+                                        </table>
+                                        <br><br>
+                                    <table  class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                              {%for j in range(hard[i] | length)%}
+                                              {%if j != 0%}
+                                              <th>{{hard[i][j]}}</th>
+                                              {%endif%}
+                                              {%endfor%}
+                                              
+                                            </tr>
+                                        </thead>
+                                   {%else%}
+                                        <tbody>
+                                            <tr>
+                                              {%for j in range(hard[i] | length)%}
+                                              {%if hard[i][j] is defined %}
+                                                    <td><img src='static/styles/dist/img/hardware.png'>{{hard[i][j]}}</td>
+                                              {%endif%}
+                                                    {%endfor%}
+                                              </tr>
+                                              {% endif%}
+                                              {% endfor %}
+                                 
+                                                </tbody>
+                                        </table>   
+
+                                    </div>
+                                                </div>
+                                            </div>
+                <div class="col-md-6">
+                  <div class="card card-custom">
+
+                    <div class="card-header">
+                      <h3 class="card-title"> Danh sách tiến trình</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-widget="remove"><i
+                            class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      
+                      <table class="table table-hover table-striped" id="Tabla">
+                        <thead class="header-table">
+                          <tr>
+                            <th>Tên tiến trình</th>
+                            <th>Dung lượng CPU (%)</th>
+                            <th>Dung Lượng RAM (%)</th>
+                            <th>Thời gian</th>
+                          </tr>
+                        </thead>
+                        <tbody id="TableBody">
+                          {%for i in range(process | length) %}
+                              <tr>
+                              <td><img src='static/styles/dist/img/process.png'>{{process[i][0]}}</td>
+                              <td>{{process[i][1]}}</td>
+                              <td>{{process[i][2]}}</td>
+                              <td>{{process[i][3]}}</td>
+                              <td>{{process[i][4]}}</td>                   
+                              </tr>                                 
+                          {%endfor%}
+
+                        </tbody>
+                      </table>
+
+                    </div>
+
+                  </div>
+
+
+                </div>
+                <!--
+                                <!-- /.card-body -->
+              </div>
+            </div>
+          </div>
+
+          <a id="background-loading">
+            <img id="gif_load" hidden="" style="position: fixed; top: 50%;" src="admin_asset_web/dist/img/loading1.gif">
+          </a>
+        </div>
+      </div>
+      <!-- /.row -->
+  </div>
+  </div>
+  <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+
+  </div>
+  <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <!-- AdminLTE for demo purposes -->
+  {% include 'footer.html' %}
+
+  <script src="admin_asset_web/plugins/js/Chart.js"></script>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  <style type="text/css">
+    svg {
+      display: block;
+      width: 200px;
+      height: 200px;
+    }
+
+    .axis1 text {
+      font-size: 14px;
+      fill: #f1f1f1;
+    }
+
+    .axis1 .domain,
+    .axis1 .tick line {
+      margin-left: 5px;
+      stroke-width: 3px;
+      stroke: #00cbf9;
+    }
+
+    .axis2 text {
+      font-size: 14px;
+      fill: #f1f1f1;
+    }
+
+    .axis2 .domain,
+    .axis2 .tick line {
+      margin-left: 5px;
+      stroke-width: 3px;
+      stroke: #ff8100;
+    }
+
+
+    .label {
+      fill: #fff;
+      stroke: #f00;
+      stroke-width: 1px;
+      font-size: 24px;
+    }
+
+    .circle-chart {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://unpkg.com/d3-radial-axis@1.5/dist/d3-radial-axis.min.js"></script>
+
+  <script>
+    function deg2rad(deg) { return deg * Math.PI / 180; }
+
+    var r = 130,
+      exAngle = 55,
+      whRatio = 2 / (Math.sin(deg2rad(exAngle)) + 1.1),
+      angleScale = d3.scaleLinear()
+        .domain([0, 100])
+        .range([(90 + exAngle) * -1, 90 + exAngle]);
+
+    var svg1 = d3.select('RAM').append('svg')
+      .attr('viewBox', -r * 1 + " " + -r * 1.11 + " " + r * 2 + " " + r * 2 * whRatio);
+
+    var svg2 = d3.select('CPU').append('svg')
+      .attr('viewBox', -r * 1 + " " + -r * 1.11 + " " + r * 2 + " " + r * 2 * whRatio);
+
+    var axis1 = d3.axisRadialInner(angleScale.copy().range(angleScale.range().map(d => deg2rad(d))), r).tickPadding(15);
+    var axis2 = d3.axisRadialInner(angleScale.copy().range(angleScale.range().map(d => deg2rad(d))), r).tickPadding(15);
+
+
+    svg1.append('g').classed('axis1', true)
+      .call(axis1);
+    svg2.append('g').classed('axis2', true)
+      .call(axis2);
+
+    var pointer1 = svg1.append('g')
+      .attr('transform', 'scale(' + r * 0.85 + ')')
+      .append('path')
+      .attr('fill', 'red')
+      .attr('d', ['M0 -1', 'L0.03 0', 'A 0.03 0.03 0 0 1 -0.03 0', 'Z'].join(' '))
+      .attr('transform', `rotate(${angleScale(0)})`)
+    var pointer2 = svg2.append('g')
+      .attr('transform', 'scale(' + r * 0.85 + ')')
+      .append('path')
+      .attr('fill', 'red')
+      .attr('d', ['M0 -1', 'L0.03 0', 'A 0.03 0.03 0 0 1 -0.03 0', 'Z'].join(' '))
+      .attr('transform', `rotate(${angleScale(0)})`)
+
+
+    var label1 = svg1.append('text')
+      .classed('label', true)
+      .attr('x', 0)
+      .attr('y', r * 0.6)
+      .attr('text-anchor', 'middle')
+      .text('0');
+
+    var label2 = svg2.append('text')
+      .classed('label', true)
+      .attr('x', 0)
+      .attr('y', r * 0.6)
+      .attr('text-anchor', 'middle')
+      .text('0');
+
+
+    setInterval(() => {
+      //data chart 1 (% RAM)
+      var newVal1 = Math.round(Math.random() * 100);
+
+      label1.transition()
+        .duration(800)
+        .attrTween("d", function () {
+          var v = label1.text();
+          return function (n) {
+            var i = d3.interpolateNumber(0, +newVal1);
+            label1.text(parseInt(i(n)) + ' %');
+          };
+        });
+
+      pointer1.transition()
+        .duration(1200)
+        .ease(d3.easeElastic)
+        .attr('transform', `rotate(${angleScale(newVal1)})`);
+
+
+
+      //data chart 2 (%CPU)
+      var newVal2 = Math.round(Math.random() * 100);
+
+      label2.transition()
+        .duration(800)
+        .attrTween("d", function () {
+          var v = label2.text();
+          return function (n) {
+            var i = d3.interpolateNumber(0, +newVal2);
+            label2.text(parseInt(i(n)) + ' %');
+          };
+        });
+
+      pointer2.transition()
+        .duration(1200)
+        .ease(d3.easeElastic)
+        .attr('transform', `rotate(${angleScale(newVal2)})`);
+
+    }, 3300);
+
+  </script>
+
+  <script type="text/javascript">
+    function getInfo() {
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          url: '/info',
+          success: function (response) {
+
+            var Data = JSON.parse(response);
+            var colors = ['#81BEF7', '#28a745', '#333333', '#F5D0A9', '#D0A9F5', '#6c757d'];
+            /* 3 donut charts */
+            var donutOptions = {
+              cutoutPercentage: 85,
+              legend: {
+                position: 'bottom', padding: 5, labels: {
+                  pointStyle: 'circle', usePointStyle: true
+                }
+              },
+              responsive: false
+            };
+
+            var ramTotal = Data.ramTotal;
+            var ramUsed = Data.ramUsed;
+            var ramFree = ramTotal - ramUsed;
+            // donut 3
+            var chDonutDataRAM = {
+              labels: ['Used: ' + ramUsed + 'GiB', 'Free: ' + ramFree + 'GiB'],
+              // labels: ['Used: 12GiB', 'Free: 38iB'],
+              datasets: [
+                {
+                  backgroundColor: colors.slice(4, 5),
+                  borderWidth: 0,
+                  data: [Data.ramUsed, ramFree]
+                  // data: [12, 38]
+                }
+              ]
+            };
+            var chDonutRAM = document.getElementById("RamChart");
+            if (chDonutRAM) {
+              new Chart(chDonutRAM, {
+                type: 'pie',
+                data: chDonutDataRAM,
+                options: donutOptions
+              });
+              Chart.defaults.global.defaultFontColor = '#dcf3ff';
+            }
+            cpuPercent = Data.cpu;
+            var CpuFree = 100 - cpuPercent
+            // donut 3
+            var chDonutDataCPU = {
+              labels: ['Used: ' + cpuPercent + '%', 'Free: ' + CpuFree + '%'],
+              datasets: [
+                {
+                  backgroundColor: colors.slice(3, 4),
+                  borderWidth: 0,
+                  data: [cpuPercent, CpuFree]
+                  // data: [1, 99]
+                }
+              ]
+            };
+            var chDonutCPU = document.getElementById("CpuChart");
+            if (chDonutCPU) {
+              new Chart(chDonutCPU, {
+                type: 'pie',
+                data: chDonutDataCPU,
+                options: donutOptions
+              });
+            }
+            swapTotal = Data.swapTotal;
+            swapUsed = Data.swapUsed;
+
+            var swapFree = swapTotal - swapUsed;
+
+            var chDonutDataRAM = {
+              labels: ['Used: ' + swapUsed + 'MiB', 'Free: ' + swapFree + ' MiB'],
+              datasets: [
+                {
+                  backgroundColor: colors.slice(0, 1),
+                  borderWidth: 0,
+                  data: [swapUsed, swapFree]
+                  // data: [5, 95]
+                }
+              ]
+            };
+            var chDonutRAM = document.getElementById("SwapChart");
+            if (chDonutRAM) {
+              new Chart(chDonutRAM, {
+                type: 'pie',
+                data: chDonutDataRAM,
+                options: donutOptions,
+              });
+            };
+            document.getElementById("timeInfo").innerHTML = Data.time;
+            document.getElementById("uptimeInfo").innerHTML = Data.up_time;
+            document.getElementById("swapInfo").innerHTML = Data.swap + "%"
+            document.getElementById("processInfo").innerHTML = Data.process;
+
+          }
+        });
+      });
+
+    }
+
+    getInfo();
+
+    window.setInterval(function () {
+      getInfo();
+    }, 5000)
+
+  </script>
+  <style>
+    .gauge-chart {
+      width: 100px;
+    }
+
+    .charts-circle {
+      height: 100%;
+      border-left: 1px solid #ccc;
+    }
+
+    @media only screen and (max-width: 1100px) and (min-width: 576px) {
+      .charts-circle {
+        display: block;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .charts-circle {
+        border-left: 0px;
+      }
+    }
+  </style>
+
+
+
+
+  <!-- */ =====================================  Network card ===================================/ -->
+
+  <script>
+    networkCardFunction()
+    function networkCardFunction() {
+
+
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        backgroundColor: "transparent",
+        zoomEnabled: true,
+        axisX: {
+          labelFontColor: "transparent",
+          valueFormatString: "0"
+        },
+        axisY: {
+          prefix: "",
+          includeZero: false,
+          labelFontColor: "#dcf3ff",
+          minimum: 0,
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          verticalAlign: "top",
+          fontSize: 15,
+          fontColor: "#dcf3ff",
+          itemclick: toggleDataSeries
+        },
+        data: [
+
+          {
+            type: "line",
+            xValueType: "dateTime",
+            yValueFormatString: "00.00",
+            xValueFormatString: "hh:mm:ss TT",
+            showInLegend: true,
+            name: "<?=explode(" || ", trim($nw))[0]?>",
+            // dataPoints: dataPoints<?=$i?>,
+          },
+
+          // { 
+          //     type: "line",
+          //     xValueType: "dateTime",
+          //     yValueFormatString: "$####.00",
+          //     xValueFormatString: "hh:mm:ss TT",
+          //     showInLegend: true,
+          //     name: "Company A",
+          //     dataPoints: dataPoints1,
+          //     },
+          //     {               
+          //         type: "line",
+          //         xValueType: "dateTime",
+          //         yValueFormatString: "$####.00",
+          //         showInLegend: true,
+          //         name: "Company B" ,
+          //         dataPoints: dataPoints2
+          // },
+          // {               
+          //         type: "line",
+          //         lineColor:"#ff7504",
+          //         xValueType: "dateTime",
+          //         yValueFormatString: "$####.00",
+          //         showInLegend: true,
+          //         name: "Company C" ,
+          //         dataPoints: dataPoints3
+          // }
+        ]
+      });
+
+      function toggleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        }
+        else {
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
+
+      var updateInterval = 3000;
+      // initial value
+      var yValue1 = 600;
+      var yValue2 = 605;
+      var yValue2 = 607;
+
+      var time = new Date;
+      // starting at 9.30 am
+      time.setHours(9);
+      time.setMinutes(30);
+      time.setSeconds(00);
+      time.setMilliseconds(00);
+
+      // function updateChart(count) {
+      //   count = count || 1;
+      //   var deltaY1, deltaY2, deltaY3;
+      //   for (var i = 0; i < count; i++) {
+      //       deltaY1 = .5 + Math.random() *(-.5-.5);
+      //       deltaY2 = .5 + Math.random() *(-.5-.5);
+      //       deltaY3 = .5 + Math.random() *(-.5-.5);
+
+      //   // adding random value and rounding it to two digits. 
+      //   yValue1 = Math.random()*100;
+      //   yValue2 = Math.random()*100;
+      //   yValue3 = Math.random()*100;
+
+      //   // pushing the new values
+      //   $(document).ready(function() {
+      //   $.ajax({
+      //     type: "GET",
+      //     url: '/network',
+
+      //     success: function (data) {
+      //       var data = JSON.parse(data);
+
+
+      //       chart.render();
+
+      //       myLineChart.data.datasets[4].data[chartlen] = 90;
+      //       console.log("update")
+      //       myLineChart.update();
+      //     }
+      //   });
+      //   });
+      //   dataPoints1.push({
+      //       x: time.getTime(),
+      //       y: yValue1
+      //   });
+      //   dataPoints2.push({
+      //       x: time.getTime(),
+      //       y: yValue2
+      //   });
+      //   dataPoints3.push({
+      //       x: time.getTime(),
+      //       y: yValue3
+      //   });
+
+      //   }
+
+
+      //   // updating legend text with  updated with y Value 
+      //   chart.options.data[0].legendText = " enp2s0  " + parseInt(yValue1) + " Mbps";
+      //   chart.options.data[1].legendText = " enp2s1  " + parseInt(yValue2) + " Mbps";
+      //   chart.options.data[2].legendText = " enp2s2  " + parseInt(yValue3) + " Mbps"; 
+
+      // }
+      // // generates first set of dataPoints 
+      // updateChart(60);
+      // setInterval(function () { updateChart() }, updateInterval);
+
+    }
+  </script>
+
+
+
+
+  <!-- */ =====================================  RAM ===================================/ -->
+
+  <script>
+
+    ramFunction();
+    function ramFunction() {
+      var dataPoints1 = [];
+
+      var chart = new CanvasJS.Chart("RAM", {
+        backgroundColor: "transparent",
+        zoomEnabled: true,
+        axisX: {
+          labelFontColor: "transparent",
+          valueFormatString: "0"
+        },
+        axisY: {
+          prefix: "",
+          includeZero: false,
+          labelFontColor: "#dcf3ff",
+          minimum: 0,
+          maximum: 100
+        },
+        toolTip: {
+          shared: true
+        },
+        legend: {
+          cursor: "pointer",
+          verticalAlign: "top",
+          fontSize: 15,
+          fontColor: "#dcf3ff",
+          itemclick: toggleDataSeries
+        },
+        data: [{
+          type: "line",
+          xValueType: "dateTime",
+          yValueFormatString: "00.00'%'",
+          xValueFormatString: "hh:mm:ss TT",
+          showInLegend: true,
+          name: "RAM usage",
+          dataPoints: dataPoints1,
+        }]
+      });
+
+      function toggleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+        }
+        else {
+          e.dataSeries.visible = true;
+        }
+        chart.render();
+      }
+
+      var updateInterval = 3000;
+      // initial value
+      var yValue1 = 600;
+
+      var time = new Date;
+      // starting at 9.30 am
+      time.setHours(9);
+      time.setMinutes(30);
+      time.setSeconds(00);
+      time.setMilliseconds(00);
+
+      async function updateChart(count) {
+
+        if (count > 0) {
+          count = count || 1;
+          var deltaY1
+          var ramValue;
+          await $.ajax({
+            type: "GET",
+            url: '/info',
+            success: function (response) {
+              var Data = JSON.parse(response)
+              // yValue1 = Math.random();;
+              ramValue =  Data.ram
+            }
+          });
+          for (var i = 0; i < count; i++) {
+            time.setTime(time.getTime() + updateInterval);
+            deltaY1 = .5 + Math.random() * (-.5 - .5);
+            yValue1 = parseInt(ramValue);
+            // pushing the new values
+            dataPoints1.push({
+              x: time.getTime(),
+              y: yValue1
+            });
+            // updating legend text with  updated with y Value 
+            chart.options.data[0].legendText = " RAM Usage " + yValue1 + " %";
+            chart.render();
+          }
+        }
+        else {
+          count = count || 1;
+          var deltaY1
+          for (var i = 0; i < count; i++) {
+            time.setTime(time.getTime() + updateInterval);
+            deltaY1 = .5 + Math.random() * (-.5 - .5);
+            await $.ajax({
+              type: "GET",
+              url: '/info',
+              success: function (response) {
+                var Data = JSON.parse(response)
+                // yValue1 = Math.random();
+                yValue1 = parseInt(Data.ram);
+
+                // pushing the new values
+                dataPoints1.push({
+                  x: time.getTime(),
+                  y: yValue1
+                });
+                // updating legend text with  updated with y Value 
+                chart.options.data[0].legendText = " RAM Usage " + yValue1 + " %";
+                chart.render();
+              }
+            });
+          }
+        }
+
+
+
+      }
+      // generates first set of dataPoints 
+      updateChart(30);
+      setInterval(function () { updateChart() }, updateInterval);
+
+    }
+  </script>
+
+
+
+ 
+<!-- */ =====================================  CPU ===================================/ -->
+
+<script>
+
+  CpuFunction();
+  function CpuFunction() {
+  var dataPoints1 = [];
+  
+  var chart = new CanvasJS.Chart("CPU", {
+    backgroundColor: "transparent",
+      zoomEnabled: true,
+      axisX: {
+          labelFontColor: "transparent",
+          valueFormatString:"0"
+      },
+      axisY:{
+          prefix: "",
+          includeZero: false,
+          labelFontColor: "#dcf3ff",
+          minimum: 0,
+          maximum: 100
+      }, 
+      toolTip: {
+          shared: true
+      },
+      legend: {
+          cursor:"pointer",
+          verticalAlign: "top",
+          fontSize: 15,
+          fontColor: "#dcf3ff",
+          itemclick : toggleDataSeries
+      },
+      data: [{ 
+          type: "line",
+          lineColor:"#ff7504",
+          xValueType: "dateTime",
+          yValueFormatString: "00.00'%'",
+          xValueFormatString: "hh:mm:ss TT",
+          showInLegend: true,
+          indexLabelFontColor: "ff7504",
+          name: "CPU usage",
+          dataPoints: dataPoints1,
+          }]
+  });
+  
+  function toggleDataSeries(e) {
+      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+          e.dataSeries.visible = false;
+      }
+      else {
+          e.dataSeries.visible = true;
+      }
+      chart.render();
+  }
+  
+  var updateInterval = 1000;
+  // initial value
+  var yValue1 = 600; 
+  
+  var time = new Date;
+  // starting at 9.30 am
+  time.setHours(9);
+  time.setMinutes(30);
+  time.setSeconds(00);
+  time.setMilliseconds(00);
+  
+  async function updateChart(count) {
+        if(count>0){
+          count = count || 1;
+          var deltaY1
+          var cpuValue;
+          await $.ajax({
+                  type: "GET",
+                  url: '/info',
+                  success: function(response)
+                  {
+                    var Data = JSON.parse(response)
+                    cpuValue = parseInt(Data.cpu)
+                  }});
+          for (var i = 0; i < count; i++) {
+              time.setTime(time.getTime()+ updateInterval);
+              deltaY1 = .5 + Math.random() *(-.5-.5);
+                    yValue1 = parseInt(cpuValue);
+                    dataPoints1.push({
+                        x: time.getTime(),
+                        y: yValue1
+                    });
+                    // updating legend text with  updated with y Value 
+                    chart.options.data[0].legendText = " CPU Usage " + yValue1 + " %";
+                    chart.render();
+                }
+          }
+          else{
+            count = count || 1;
+            var deltaY1
+            for (var i = 0; i < count; i++) {
+                time.setTime(time.getTime()+ updateInterval);
+                deltaY1 = .5 + Math.random() *(-.5-.5);
+                await $.ajax({
+                    type: "GET",
+                    url: '/info',
+                    success: function(response)
+                    {
+                      var Data = JSON.parse(response)
+                      cpuValue = parseInt(Data.cpu)
+                      // console.log(Data.cpuPercent);
+                      yValue1 = parseInt(cpuValue);
+  
+                      // pushing the new values
+                      dataPoints1.push({
+                          x: time.getTime(),
+                          y: yValue1
+                      });
+                      // updating legend text with  updated with y Value 
+                      chart.options.data[0].legendText = " CPU Usage " + yValue1 + " %";
+                      chart.render();
+                    }});
+                  }
+          }
+      
+  
+      
+  }
+  // generates first set of dataPoints 
+  updateChart(30);   
+    setInterval(function(){updateChart()}, updateInterval);
+  
+  }
+  </script>
+</body>
+
+</html>

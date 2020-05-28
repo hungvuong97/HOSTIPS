@@ -35,21 +35,7 @@ def home():
           rowTable.append((data[i].split('||')[j]).replace('\\n', '').strip())
           continue
       table.append(rowTable)
-      
-    # addr = psutil.net_if_addrs()
-    # ifaceList  = addr.keys()
-    # byte = psutil.net_io_counters(pernic=True)
-    # index = 0
-    # netstat = []
-    # for iface in ifaceList:
-    #   ip = addr[iface][0][1]
-    #   try:
-    #     ipchek = ip.split(".")[3]
-    #     status = "<span style='color:#70dc70'>Up</span>"
-    #   except:
-    #     ip = " "
-    #     status = "<span style='color:#ff2626'>Down</span>"    
-    #     netstat.append([iface,ip,status])
+
     hard = []
     cmd = '.\powershell\systeminfo.ps1'
     p = subprocess.Popen(["powershell.exe" ,cmd], stdout=subprocess.PIPE, shell=True)
@@ -73,7 +59,6 @@ def home():
           except:
               continue
       hard.append(row)
-    print(table)
     return render_template('index.html', process=table, hard=hard)
   else: 
     return redirect('/login')
