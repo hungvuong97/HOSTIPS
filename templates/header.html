@@ -70,11 +70,11 @@
 
                             <li class="menusection">Main</li>
                             <li class="nav-item has-treeview">
-                                <a href="/" class="nav-link">
+                                <a href="{{url_for('home')}}" class="nav-link">
                                     <p><i class="fa fa-home" aria-hidden="true"></i> &nbsp;Trang chủ</p>
                                 </a>
                             </li>
-                            <li class="nav-item has-treeview">
+                            <!-- <li class="nav-item has-treeview">
                                 <a href="firewall.php" class="nav-link">
                                     <p><i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Cấu hình tường lửa</p>
                                 </a>
@@ -93,9 +93,9 @@
                                 <a href="app.php" class="nav-link">
                                     <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Quản lý ứng dụng</i></p>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item has-treeview">
-                                <a href="log.php" class="nav-link">
+                                <a href="{{ url_for('log') }}" class="nav-link">
                                     <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Quản lý lưu nhật ký</i>
                                     </p>
                                 </a>
@@ -117,7 +117,7 @@
                 </li>
               </ul>
       </li> -->
-                            <li class="nav-item has-treeview">
+                            <!-- <li class="nav-item has-treeview">
                                 <a href="service_testing_and_evaluation.php" class="nav-link">
                                     <p><i class="fa fa-archive" aria-hidden="true"></i> &nbsp;Kiểm thử và đánh giá dịch
                                         vụ</i></p>
@@ -134,7 +134,7 @@
                                     <p><i class="fa fa-bookmark" aria-hidden="true"></i> &nbsp;Rà soát tập tin mã
                                         độc</i></p>
                                 </a>
-                            </li>
+                            </li> -->
                             <!--  <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="fa fa-archive"></i><p> &nbsp;Phân hệ mã độc DGA<i class="fa fa-angle-left right"></i></p>
@@ -161,21 +161,21 @@
                 </li>
               </ul>
       </li> -->
-
+<!-- 
                             <li class="nav-item has-treeview">
                                 <a href="firewall_module.php" class="nav-link">
                                     <p><i class="fa fa-sitemap" aria-hidden="true"></i> &nbsp;Phân hệ tường lửa </i>
                                     </p>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item has-treeview">
-                                <a href="changepassword.php" class="nav-link">
+                                <a href="{{url_for('changePass')}}" class="nav-link">
                                     <p><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;Thay đổi mật khẩu </i>
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="php/logout.php" class="nav-link">
+                                <a href="{{url_for('logout')}}" class="nav-link">
                                     <p><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Đăng xuất </i>
                                     </p>
                                 </a>
@@ -190,7 +190,7 @@
         </nav>
         <!-- /.navbar -->
         <!-- jQuery -->
-        <script src="styles/plugins/jquery/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='styles/plugins/jquery/jquery.min.js') }}" ></script>
 
 
         <div class="modal" tabindex="-1" role="dialog" id="LogModel">

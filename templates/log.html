@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="includeHeader"></div>
+        {% include 'header.html' %}
+    </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid-header">
+            <div class="row mb-2">
+              <div class="col-sm-6">   <div class="form-inline" >
+    
+                <h1>Quản lý lưu nhật ký</h1>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Trang chủ</a></li>
+                  <li class="breadcrumb-item active">Quản lý lưu nhật ký</li>
+                </ol>
+              </div>
+            </div>
+          </div><!-- /.container-fluid -->
+        </section>
+    
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+        
+                <!-- /.card-header -->
+                <div class="card-body" >
+                    <canvas id="method"></canvas>
+                    <canvas id="port"></canvas>
+                    <canvas id="status"></canvas>
+                    <canvas id="hour" width="800" height="300"></canvas>
+                    <canvas id="day" width="800" height="300"></canvas>
+                    {% for para in log %}
+                    {{para}}<br>
+                    {% endfor %}               
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+    
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+       <!-- <?php
+    
+    include 'include/footer.php';
+    
+    ?> -->
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ url_for('static', filename='styles/plugins/js/Chart.js') }}"></script>
+    <script type="text/javascript">
+    function* iterate_object(o) {
+    var keys = Object.keys(o).sort();
+    console.log(keys)
+    for (var i=0; i<keys.length; i++) {
+        yield [keys[i], o[keys[i]]];
+    }
+}
+    function getInfo() {
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          url: '/chart',
+          success: function (response) {
+
+            let res = JSON.parse(response);
+            let Data = res[0];
+            let hourKey = res[1];
+            let hourValue = res[2]
+            let day = res[3];
+            var colors = ['#81BEF7', '#28a745', '#333333', '#F5D0A9', '#D0A9F5', '#6c757d'];
+            /* 3 donut charts */
+            var donutOptions = {
+              cutoutPercentage: 85,
+              legend: {
+                position: 'bottom', padding: 5, labels: {
+                  pointStyle: 'circle', usePointStyle: true
+                }
+              },
+              responsive: false
+            };
+
+            // donut 3
+            let methods = []
+            let labels = []
+            for(const [method, value] of Object.entries(Data.method)){
+                methods.push(value);
+                labels.push(`${method}: ${value}`)
+            }
+            console.log(methods, labels)
+            var chDonutDataMethod = {
+              labels: labels,
+              datasets: [
+                {
+                  backgroundColor: colors.slice(4, 5),
+                  borderWidth: 0,
+                  data: methods
+                }
+              ]
+            };
+            var chDonutMethod = document.getElementById("method");
+            if (chDonutMethod) {
+              new Chart(chDonutMethod, {
+                type: 'pie',
+                data: chDonutDataMethod,
+                options: donutOptions
+              });
+              Chart.defaults.global.defaultFontColor = '#dcf3ff';
+            }
+            // donnut
+            methods = []
+            labels = []
+            for(const [method, value] of Object.entries(Data.port)){
+                methods.push(value);
+                labels.push(`${method}: ${value}`)
+            }
+            var chDonutDataPort = {
+              labels: labels,
+              datasets: [
+                {
+                  backgroundColor: colors.slice(4, 5),
+                  borderWidth: 0,
+                  data: methods
+                }
+              ]
+            };
+            var chDonutPort = document.getElementById("port");
+            if (chDonutPort) {
+              new Chart(chDonutPort, {
+                type: 'pie',
+                data: chDonutDataPort,
+                options: donutOptions
+              });
+              Chart.defaults.global.defaultFontColor = '#dcf3ff';
+            }
+           // donnut
+            methods = []
+            labels = []
+            for(const [method, value] of Object.entries(Data.status)){
+                methods.push(value);
+                labels.push(`${method}: ${value}`)
+            }
+            var chDonutDataStatus = {
+              labels: labels,
+              datasets: [
+                {
+                  backgroundColor: colors.slice(4, 5),
+                  borderWidth: 0,
+                  data: methods
+                }
+              ]
+            };
+            var chDonutStatus = document.getElementById("status");
+            if (chDonutStatus) {
+              new Chart(chDonutStatus, {
+                type: 'pie',
+                data: chDonutDataStatus,
+                options: donutOptions
+              });
+              Chart.defaults.global.defaultFontColor = '#dcf3ff';
+            }
+
+            methods = []
+            labels = []
+            console.log(hourKey, hourValue)
+            for(const [method, value] of Object.entries(hourValue)){
+                methods.push(value);
+            }
+            for(const [method, value] of Object.entries(hourKey)){
+                labels.push(value);
+            }
+            var ctx = document.getElementById("hour");
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Thống kê loại file upload đến hệ thống',
+                  data: methods,
+                backgroundColor: '#638b94',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: false,
+                scales: {
+                  xAxes: [{
+                    ticks: {
+                      maxRotation: 90,
+                      minRotation: 80
+                    }
+                  }],
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: false
+                    }
+                  }]
+                }
+              }
+            });
+            Chart.defaults.global.defaultFontColor = '#dcf3ff';
+
+
+            methods = []
+            labels = []
+            for(const [method, value] of Object.entries(day)){
+                methods.push(value);
+                labels.push(`${method}`)
+            }
+            var ctx = document.getElementById("day");
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Thống kê loại file upload đến hệ thống',
+                  data: methods,
+                backgroundColor: '#638b94',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: false,
+                scales: {
+                  xAxes: [{
+                    ticks: {
+                      maxRotation: 90,
+                      minRotation: 80
+                    }
+                  }],
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: false
+                    }
+                  }]
+                }
+              }
+            });
+            Chart.defaults.global.defaultFontColor = '#dcf3ff';
+          }
+
+          
+        });
+      });
+    }
+    getInfo();    
+    </script>
+    
+    
+</body>
+</html>
+      
