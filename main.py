@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, json, redirect, request, make_response
+from flask import Flask, render_template, json, redirect, request, make_response, session
 from time import sleep,mktime,strftime
 from flask import jsonify 
 import requests
@@ -289,6 +289,14 @@ def logout():
   resp.set_cookie('token','', max_age = 3600)
   return resp
 
+@app.route('/session', methods=['GET'])
+def session1():
+  if 'user' in session : 
+    session['user'] = session.get('user') + 1
+  else:
+    session['user'] = 1
+  return "total uset: {}".format(session.get('user'))
+
 
 if __name__ == "__main__":
-    app.run(host = '127.0.0.1', port = '3000', debug=True)
+    app.run(host = '127.0.0.1', port = '3000', threaded=True, debug=True)
