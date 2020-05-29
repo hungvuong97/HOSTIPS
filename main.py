@@ -102,7 +102,6 @@ def network():
       else:
         dic['port'][port] = dic['port'][port] + 1
       time = data[i+1].split(" ")[0][1:]
-      # print(time)
       date = time.split(":")[0]
       hour = time.split(":")[1]
       curyear = time.split(":")[2]
@@ -111,7 +110,6 @@ def network():
         dateDic[curdate]= 1
       else:
         dateDic[curdate] = dateDic[curdate] + 1
-
       curhour = int(hour)
       if hour + "-"+ curdate not in hourDic.keys():
         hourDic[hour + "-"+ curdate]= 1
@@ -124,13 +122,6 @@ def network():
         dic['status'][status] = 1
       else:
         dic['status'][status] = dic['status'][status] + 1
-
-
-
-  # print(dic)
-
-  # print(hourDic)
-
   month = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec']
 
   display_hour ={}
@@ -149,10 +140,6 @@ def network():
       display_hour[curdate + "-" + str(i) + "h" ] = 0
     else:
       display_hour[curdate + "-" + str(i) + "h"] = hourDic[str(i) + "-"+ curdate]
-    
-
-
-  # print(dateDic)
   curday = int(curdate.split("/")[0])
   curmonth = curdate.split("/")[1]
 
@@ -164,7 +151,6 @@ def network():
     startday = curday -15
     startmonth = curmonth
   else:
-    # print(month.index(curmonth) - 1 )
     if not month.index(curmonth) - 1 <= 0:
       startmonth = month[month.index(curmonth) - 1]
       startday = calendar.monthrange(curyear,month.index(startmonth))[1]-(15-curday)
